@@ -14,6 +14,7 @@ public class TorpedoStore {
 
   private int torpedoCount = 0;
 
+  // creating the random variable at this point in the code is necessary because it results in performance improvement, and actual random numbers are achieved here
   private Random generator = new Random();
 
   public TorpedoStore(int numberOfTorpedos){
@@ -32,6 +33,7 @@ public class TorpedoStore {
 
   public boolean fire(int numberOfTorpedos){
     if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
+      // Omitting 'throw' leads to: exception not thrown, method continues execution
       throw new IllegalArgumentException("numberOfTorpedos");
     }
 
