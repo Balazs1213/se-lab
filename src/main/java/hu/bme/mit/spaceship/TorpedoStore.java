@@ -14,6 +14,9 @@ public class TorpedoStore {
 
   private int torpedoCount = 0;
 
+  // creating the random variable at this point in the code is necessary because it results in performance improvement, and actual random numbers are achieved here
+  private Random generator = new Random();
+
   public TorpedoStore(int numberOfTorpedos){
     this.torpedoCount = numberOfTorpedos;
 
@@ -30,18 +33,18 @@ public class TorpedoStore {
 
   public boolean fire(int numberOfTorpedos){
     if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
-      new IllegalArgumentException("numberOfTorpedos");
+      // Omitting 'throw' leads to: exception not thrown, method continues execution
+      throw new IllegalArgumentException("numberOfTorpedos");
     }
 
     boolean success = false;
 
     // simulate random overheating of the launcher bay which prevents firing
-    Random generator = new Random();
-    double r = generator.nextDouble();
+    double r = this.generator.nextDouble();
 
     if (r >= FAILURE_RATE) {
       // successful firing
-      this.torpedoCount =- numberOfTorpedos;
+      this.torpedoCount -= numberOfTorpedos;
       success = true;
     } else {
       // simulated failure
